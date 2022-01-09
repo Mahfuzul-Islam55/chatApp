@@ -4,7 +4,7 @@ const databaseConnect=()=>{
     mongoose.connect(process.env.DATABASE_URL,{
         useNewUrlParser:true,
         useUnifiedTopology:true,
-        useCreateIndex:true
+        //useCreateIndex:true
     }).then(()=>{
         console.log("MongoDB Database successfully connected.");
     }).catch(error=>{
