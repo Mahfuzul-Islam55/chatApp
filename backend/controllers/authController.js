@@ -3,6 +3,8 @@ const validator=require('validator');
 const registerModel=require('../models/authModel');
 const fs=require('fs');
 const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
+const { options } = require('../routes/authRoute');
 module.exports.userRegister=(req,res)=>{
     const form=formidable();
     form.parse(req,async(err,fields,files)=>{
@@ -59,14 +61,33 @@ module.exports.userRegister=(req,res)=>{
                                 password:await bcrypt.hash(password,10),
                                 image:files.image.originalFilename
                             })
+
+                            const token=jwt.sign({
+                                id:userCreate._id,
+                                email:userCreate.email,
+                                userName:userCreate.userName,
+                                image:userCreate.image,
+                                registerTime:userCreate.createAt,
+                            },process.env.SECRET,{expiresIn:process.env.TOKEN_EXP});
+                            
+                            const options={
+                                expires:new Date(Date.now()+process.env.COOKIE_EXP*24*60*60*1000)
+                            }
+                            res.status(201).cookie('authToken',token,options).json({
+                                successMessage:'Your Registration is successfull',
+                                token
+                            });
+                            console.log(token);
+                        }
+                        else{
+                            res.status(500).json({error:{errorMessage:['Internal Server Error.']}})
                         }
                     });
                 }
             }catch(error){
-                console.log(error);
+                res.status(500).json({error:{errorMessage:['Internal Server Error.']}})
             }
-            console.log(getImageName);
-            console.log(newImageName);
+          
         }
     });
 }

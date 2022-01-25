@@ -5,6 +5,8 @@ const app=express();
 const databaseConnect=require('../backend/config/database');
 const dotenv=require('dotenv');
 const authRouter=require('./routes/authRoute');
+const cookieParser=require('cookie-parser');
+
 
 dotenv.config({
     path:'backend/config/config.env'
@@ -16,6 +18,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/messenger',authRouter);
+app.use(cookieParser());
 
 
 databaseConnect();
