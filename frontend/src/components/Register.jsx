@@ -27,7 +27,7 @@ export default function Register() {
         if(e.target.files[0]!==0){
             setState({
                 ...state,
-                [e.target.name]:e.target.value
+                [e.target.name]:e.target.files[0]
             })
         }
         const reader=new FileReader();

@@ -14,7 +14,7 @@ const registerSchema=new Schema({
         type:String,
         required:true
     },
-    imgage:{
+    image:{
         type:String,
         required:true
     }
