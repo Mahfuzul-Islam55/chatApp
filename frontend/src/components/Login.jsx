@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom';
 import {userLogin} from '../store/actions/authAction';  
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
+import {useAlert} from 'react-alert';
+import { ERROR_CLEAR, SUCCESS_MESSAGE_CLEAR } from '../store/types/authTypes';
 
-function Login() {
+function Login({history}) {
+
+    const alert=useAlert();
+    const {loading,successMessage,error,myInfo,authenticate}=useSelector(state=>state.auth);
 
     const dispatch=useDispatch();
 
@@ -21,9 +26,22 @@ function Login() {
     const login=(e)=>{
         e.preventDefault(); 
         dispatch(userLogin(state));
-    
-        console.log(state);
     }
+
+    useEffect(()=>{
+        if(authenticate){
+            history.push('/');
+        }
+        if(successMessage){
+             alert.success(successMessage);
+             dispatch({type:SUCCESS_MESSAGE_CLEAR})
+        }
+        if(error){
+            error.map(err=>alert.error(err));
+            dispatch({type:ERROR_CLEAR})
+        }
+    },[successMessage,error])
+
     return (
        <div className="login">
            <div className="card">
