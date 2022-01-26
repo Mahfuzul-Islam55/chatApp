@@ -6,6 +6,7 @@ const databaseConnect=require('../backend/config/database');
 const dotenv=require('dotenv');
 const authRouter=require('./routes/authRoute');
 const cookieParser=require('cookie-parser');
+const bodyParser=require('body-parser');
 
 
 dotenv.config({
@@ -17,8 +18,9 @@ app.get('/',(req,res)=>{
     res.send("OK");
 })
 
-app.use('/api/messenger',authRouter);
+app.use(bodyParser());
 app.use(cookieParser());
+app.use('/api/messenger',authRouter);
 
 
 databaseConnect();
