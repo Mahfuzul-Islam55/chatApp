@@ -1,8 +1,14 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch  } from 'react-redux';
+import { useDispatch, useSelector  } from 'react-redux';
 import { userRegister } from '../store/actions/authAction';
-export default function Register() {
+import { useAlert } from 'react-alert';
+import { ERROR_CLEAR, SUCCESS_MESSAGE_CLEAR } from '../store/types/authTypes';
+
+export default function Register({history}) {
+
+    const alert=useAlert();
+    const {loading,successMessage,error,myInfo,authenticate}=useSelector(state=>state.auth);
 
     const dispatch=useDispatch();
 
@@ -49,6 +55,20 @@ export default function Register() {
         dispatch(userRegister(formData));
        
     }
+
+    useEffect(()=>{
+        if(authenticate){
+            history.push('/');
+        }
+        if(successMessage){
+             alert.success(successMessage);
+             dispatch({type:SUCCESS_MESSAGE_CLEAR})
+        }
+        if(error){
+            error.map(err=>alert.error(err));
+            dispatch({type:ERROR_CLEAR})
+        }
+    },[successMessage,error])
     return (
        <div className="register">
            <div className="card">

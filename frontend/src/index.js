@@ -6,9 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import './main.scss';
 import {Provider} from 'react-redux';
 import store from './store/index';
+import {positions ,transitions, Provider as AlertProvider} from 'react-alert';
+import alertTemplate from 'react-alert-template-basic';
+
+const options={
+  timeout:4000,
+  positions:positions.BOTTOM_CENTER,
+  transitions:transitions.SCALE
+}
+
 ReactDOM.render(
   <Provider store={store}>
-     <App></App>
+    <AlertProvider template={alertTemplate} {...options}>
+      <App></App>
+    </AlertProvider>
   </Provider>,
   document.getElementById('root')
 );
