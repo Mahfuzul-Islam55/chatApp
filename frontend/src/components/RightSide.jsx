@@ -2,6 +2,7 @@ import React from 'react';
 import { BsCameraVideoFill } from 'react-icons/bs';
 import { HiDotsCircleHorizontal } from 'react-icons/hi';
 import { IoCall } from 'react-icons/io5';
+import { Message } from './Message';
 
 export const RightSide = () => {
   return (
@@ -34,6 +35,7 @@ export const RightSide = () => {
                                   </div>
                               </div>
                           </div>
+                          <Message></Message>
                       </div>
                   </div>
                   <div className="col-4">
