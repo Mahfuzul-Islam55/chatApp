@@ -1,5 +1,6 @@
 import React from 'react';
 import {BsThreeDots,FaEdit,BiSearch} from 'react-icons/all';
+import { ActiveFriend } from './ActiveFriend';
 export const Messenger = () => {
 
   return (
@@ -30,6 +31,9 @@ export const Messenger = () => {
                             <button><BiSearch></BiSearch></button>
                             <input type="text" placeholder="search" className="form-control" />
                         </div>
+                    </div>
+                    <div className="active-friends">
+                        <ActiveFriend></ActiveFriend>
                     </div>
                 </div>
             </div>
