@@ -2,6 +2,7 @@ import React from 'react';
 import { BsCameraVideoFill } from 'react-icons/bs';
 import { HiDotsCircleHorizontal } from 'react-icons/hi';
 import { IoCall } from 'react-icons/io5';
+import { FriendInfo } from './FriendInfo';
 import { Message } from './Message';
 import { MessageSend } from './MessageSend';
 
@@ -41,7 +42,7 @@ export const RightSide = () => {
                       </div>
                   </div>
                   <div className="col-4">
-                      <h1>Friend Information Section</h1>
+                      <FriendInfo></FriendInfo>
                   </div>
               </div>
           </div>
