@@ -10,6 +10,7 @@ export const RightSide = () => {
   return (
       <div className="col-9">
           <div className="right-side">
+              <input type="checkbox" id='dot'/>
               <div className="row">
                   <div className="col-8">
                       <div className="message-send-show">
@@ -33,7 +34,7 @@ export const RightSide = () => {
                                     <BsCameraVideoFill></BsCameraVideoFill>
                                   </div>
                                   <div className="icon">
-                                      <HiDotsCircleHorizontal></HiDotsCircleHorizontal>
+                                      <label htmlFor="dot"><HiDotsCircleHorizontal></HiDotsCircleHorizontal></label>
                                   </div>
                               </div>
                           </div>
