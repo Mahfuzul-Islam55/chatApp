@@ -3,6 +3,7 @@ import { BsCameraVideoFill } from 'react-icons/bs';
 import { HiDotsCircleHorizontal } from 'react-icons/hi';
 import { IoCall } from 'react-icons/io5';
 import { Message } from './Message';
+import { MessageSend } from './MessageSend';
 
 export const RightSide = () => {
   return (
@@ -36,6 +37,7 @@ export const RightSide = () => {
                               </div>
                           </div>
                           <Message></Message>
+                          <MessageSend></MessageSend>
                       </div>
                   </div>
                   <div className="col-4">
