@@ -13,7 +13,7 @@ export const Messenger = () => {
                     <div className="top">
                         <div className="image-name">
                             <div className="image">
-                                <img src="/image/23040ddd.png"></img>
+                                    <img src="/image/23040ddd.png"></img>
                             </div>
                             <div className="name">
                                 <h3>Mahfuzul Islam</h3>

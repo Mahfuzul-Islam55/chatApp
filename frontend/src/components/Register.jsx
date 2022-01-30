@@ -107,7 +107,7 @@ export default function Register({history}) {
                        </div>
 
                        <div className="form-group">
-                           <input type="submit" value="register" className='btn' />
+                           <input type="submit" value="register"  id='register'className='btn' />
                        </div>
                        <div className="form-group">
                            <span><Link to="/messenger/login">Login Your Account</Link></span>

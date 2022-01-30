@@ -28,13 +28,13 @@ export const RightSide = () => {
                               </div>
                               <div className="icons">
                                   <div className="icon">
-                                    <IoCall></IoCall>
+                                    <IoCall size={25}></IoCall>
                                   </div>
                                   <div className="icon">
-                                    <BsCameraVideoFill></BsCameraVideoFill>
+                                    <BsCameraVideoFill size={25}></BsCameraVideoFill>
                                   </div>
                                   <div className="icon">
-                                      <label htmlFor="dot"><HiDotsCircleHorizontal></HiDotsCircleHorizontal></label>
+                                      <label htmlFor="dot"><HiDotsCircleHorizontal size={25}></HiDotsCircleHorizontal></label>
                                   </div>
                               </div>
                           </div>

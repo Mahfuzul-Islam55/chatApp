@@ -59,7 +59,7 @@ function Login({history}) {
                            <input onChange={inputHandler} value={state.password} type="password" placeholder="Password" className="form-control" id="password"  name="password"/>
                        </div>
                        <div className="form-group">
-                           <input type="submit" value="Login" className='btn'/>
+                           <input type="submit" value="Login" id='login' className='btn'/>
                        </div>
                        <div className="form-group">
                            <span><Link to="/messenger/register">Register Your Account</Link></span>
