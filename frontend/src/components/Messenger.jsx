@@ -2,6 +2,7 @@ import React from 'react';
 import {BsThreeDots,FaEdit,BiSearch} from 'react-icons/all';
 import { ActiveFriend } from './ActiveFriend';
 import { Friends } from './Friends';
+import { RightSide } from './RightSide';
 export const Messenger = () => {
 
   return (
@@ -85,6 +86,7 @@ export const Messenger = () => {
                     </div>
                 </div>
             </div>
+            <RightSide></RightSide>
         </div>
     </div>
   )
