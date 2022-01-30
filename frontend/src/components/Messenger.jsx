@@ -1,6 +1,7 @@
 import React from 'react';
 import {BsThreeDots,FaEdit,BiSearch} from 'react-icons/all';
 import { ActiveFriend } from './ActiveFriend';
+import { Friends } from './Friends';
 export const Messenger = () => {
 
   return (
@@ -34,6 +35,53 @@ export const Messenger = () => {
                     </div>
                     <div className="active-friends">
                         <ActiveFriend></ActiveFriend>
+                    </div>
+                    <div className="friends">
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend active">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend active">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
+                        <div className="hover-friend">
+                            <Friends></Friends>
+                        </div>
                     </div>
                 </div>
             </div>
