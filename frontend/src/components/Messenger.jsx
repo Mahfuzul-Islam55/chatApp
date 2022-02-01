@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import {BsThreeDots,FaEdit,BiSearch} from 'react-icons/all';
 import { ActiveFriend } from './ActiveFriend';
 import { Friends } from './Friends';
@@ -9,9 +9,8 @@ export const Messenger = () => {
 
     const {friends}=useSelector(state=>state.messenger);
     const {myInfo}=useSelector(state=>state.auth);
+    const [currentFriend,setCurrentFriend]=useState('');
     const dispatch=useDispatch();
-    console.log(friends);
-
     useEffect(()=>{
         dispatch(getFriends());
     },[])
@@ -51,14 +50,16 @@ export const Messenger = () => {
                     <div className="friends">
                         {
                             friends && friends.length>0? friends.map(fd=>
-                            <div className="hover-friend">
+                            <div onClick={()=>setCurrentFriend(fd)} className="hover-friend">
                                 <Friends friend={fd}/>
                             </div>):'no friend'
                         }
                     </div>
                 </div>
             </div>
-            <RightSide></RightSide>
+            {
+                currentFriend?<RightSide currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+            }
         </div>
     </div>
   )

@@ -1,19 +1,19 @@
 import React from 'react';
 import { BsChevronDown } from 'react-icons/bs';
 
-export const FriendInfo = () => {
+export const FriendInfo = ({currentFriend}) => {
   return (
       <div className="friend-info">
           <input type="checkbox" id='gallary' />
           <div className="image-name">
               <div className="image">
-                    <img src="/image/23040ddd.png"></img>
+                    <img src={`/image/${currentFriend.image}`}></img>
               </div>
               <div className="active-user">
                   Active
               </div>
               <div className="name">
-                  <h4>Mahfuzul Islam</h4>
+                  <h4>{currentFriend.userName}</h4>
               </div>
           </div>
           <div className="others">
