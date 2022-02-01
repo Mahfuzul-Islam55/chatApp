@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useRef} from 'react';
 import {BsThreeDots,FaEdit,BiSearch} from 'react-icons/all';
 import { ActiveFriend } from './ActiveFriend';
 import { Friends } from './Friends';
@@ -12,6 +12,7 @@ export const Messenger = () => {
 
     const [currentFriend,setCurrentFriend]=useState('');
     const [newMessage,setNewMessage]=useState('');
+    const scrollRef=useRef();
 
     const inputHandle=(e)=>setNewMessage(e.target.value);
 
@@ -39,6 +40,10 @@ export const Messenger = () => {
     useEffect(()=>{
         dispatch(getMessage(currentFriend._id));
     },[currentFriend?._id])
+
+    useEffect(()=>{
+        scrollRef.current?.scrollIntoView({behavior:'smooth'})
+    },[message])
 
   return (
     <div className="messenger">
@@ -83,7 +88,7 @@ export const Messenger = () => {
                 </div>
             </div>
             {
-                currentFriend?<RightSide message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+                currentFriend?<RightSide scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
             }
         </div>
     </div>
