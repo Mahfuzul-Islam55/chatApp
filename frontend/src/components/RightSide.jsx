@@ -6,7 +6,7 @@ import { FriendInfo } from './FriendInfo';
 import { Message } from './Message';
 import { MessageSend } from './MessageSend';
 
-export const RightSide = ({currentFriend}) => {
+export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage}) => {
   return (
       <div className="col-9">
           <div className="right-side">
@@ -39,7 +39,7 @@ export const RightSide = ({currentFriend}) => {
                               </div>
                           </div>
                           <Message></Message>
-                          <MessageSend></MessageSend>
+                          <MessageSend inputHandle={inputHandle} newMessage={newMessage} sendMessage={sendMessage}></MessageSend>
                       </div>
                   </div>
                   <div className="col-4">
