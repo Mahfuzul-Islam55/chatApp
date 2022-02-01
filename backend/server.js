@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
     res.send("OK");
 })
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use('/api/messenger',authRouter);
 app.use('/api/messenger',messengerRoute);

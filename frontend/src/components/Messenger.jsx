@@ -8,6 +8,7 @@ import { getFriends } from '../store/actions/messengerAction';
 export const Messenger = () => {
 
     const {friends}=useSelector(state=>state.messenger);
+    const {myInfo}=useSelector(state=>state.auth);
     const dispatch=useDispatch();
     console.log(friends);
 
@@ -23,10 +24,10 @@ export const Messenger = () => {
                     <div className="top">
                         <div className="image-name">
                             <div className="image">
-                                    <img src="/image/23040ddd.png"></img>
+                                    <img src={`/image/${myInfo.image}`}></img>
                             </div>
                             <div className="name">
-                                <h3>Mahfuzul Islam</h3>
+                                <h3>{myInfo.userName}</h3>
                             </div>
                         </div>
                         <div className="icons">
