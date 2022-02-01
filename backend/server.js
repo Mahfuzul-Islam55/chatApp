@@ -5,6 +5,7 @@ const app=express();
 const databaseConnect=require('../backend/config/database');
 const dotenv=require('dotenv');
 const authRouter=require('./routes/authRoute');
+const messengerRoute=require('./routes/messengerRoute');
 const cookieParser=require('cookie-parser');
 const bodyParser=require('body-parser');
 
@@ -21,6 +22,7 @@ app.get('/',(req,res)=>{
 app.use(bodyParser());
 app.use(cookieParser());
 app.use('/api/messenger',authRouter);
+app.use('/api/messenger',messengerRoute);
 
 
 databaseConnect();
