@@ -1,15 +1,15 @@
 import React from 'react';
 
-export const Friends = () => {
+export const Friends = ({friend}) => {
   return (
         <div className='friend'>
             <div className="friend-image">
                 <div className="image">
-                    <img src="/image/23040ddd.png" alt=""/>
+                    <img src={`/image/${friend.image}`} alt=""/>
                 </div>
             </div>
             <div className="friend-name">
-                <h4>Mahfuzul Shimul</h4>
+                <h4>{friend.userName}</h4>
             </div>
         </div>
         );

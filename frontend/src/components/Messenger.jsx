@@ -51,7 +51,7 @@ export const Messenger = () => {
                         {
                             friends && friends.length>0? friends.map(fd=>
                             <div className="hover-friend">
-                                <Friends/>
+                                <Friends friend={fd}/>
                             </div>):'no friend'
                         }
                     </div>
