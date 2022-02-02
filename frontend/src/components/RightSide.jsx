@@ -6,7 +6,7 @@ import { FriendInfo } from './FriendInfo';
 import { Message } from './Message';
 import { MessageSend } from './MessageSend';
 
-export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,message,scrollRef}) => {
+export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,message,scrollRef,emojiSend}) => {
   return (
       <div className="col-9">
           <div className="right-side">
@@ -39,7 +39,7 @@ export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,mess
                               </div>
                           </div>
                           <Message scrollRef={scrollRef} currentFriend={currentFriend} message={message}></Message>
-                          <MessageSend inputHandle={inputHandle} newMessage={newMessage} sendMessage={sendMessage}></MessageSend>
+                          <MessageSend emojiSend={emojiSend} inputHandle={inputHandle} newMessage={newMessage} sendMessage={sendMessage}></MessageSend>
                       </div>
                   </div>
                   <div className="col-4">

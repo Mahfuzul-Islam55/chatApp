@@ -2,9 +2,10 @@ import React from 'react';
 import { AiFillGift } from 'react-icons/ai';
 import { BiMessageAltEdit } from 'react-icons/bi';
 import { BsPlusCircle } from 'react-icons/bs';
+import { MdSend } from 'react-icons/md';
 import { RiGalleryLine } from 'react-icons/ri';
 
-export const MessageSend = ({inputHandle,newMessage,sendMessage}) => {
+export const MessageSend = ({inputHandle,newMessage,sendMessage,emojiSend}) => {
 
     const emojis = [
         '😀', '😃', '😄', '😁',
@@ -44,12 +45,12 @@ export const MessageSend = ({inputHandle,newMessage,sendMessage}) => {
               <input onChange={inputHandle} value={newMessage} type="text" name="message" id="message" placeholder="Aa" className="form-control" />
               <label htmlFor="emoji">😃</label>
           </div>
-          <div onClick={sendMessage} className="file">
-          ❤️
+          <div onClick={sendMessage} className="file">{ newMessage?<MdSend size={30}/>:'❤️'}
+        
           </div>
             <div className="emoji-section">
                 <div className="emoji">
-                    {emojis.map(e=><span>{e}</span>)}
+                    {emojis.map(e=><span onClick={()=>emojiSend(e)}>{e}</span>)}
                 </div>
             </div>
       </div>

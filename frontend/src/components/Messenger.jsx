@@ -25,6 +25,9 @@ export const Messenger = () => {
         }
         dispatch(messageSend(data));
     }
+    const emojiSend=(emoji)=>{
+        setNewMessage(`${newMessage}`+emoji);
+    }
 
     const dispatch=useDispatch();
 
@@ -88,7 +91,7 @@ export const Messenger = () => {
                 </div>
             </div>
             {
-                currentFriend?<RightSide scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+                currentFriend?<RightSide emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
             }
         </div>
     </div>
