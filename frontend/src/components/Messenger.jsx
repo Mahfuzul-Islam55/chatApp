@@ -16,6 +16,7 @@ export const Messenger = () => {
     const [newMessage,setNewMessage]=useState('');
     const [activeUser,setActiveUser]=useState([]);
     const [socketMessage,setSocketMessage]=useState('');
+    const [typingMessage,setTypingMessage]=useState('');
 
     const scrollRef=useRef();
     const socket=useRef();
@@ -24,6 +25,9 @@ export const Messenger = () => {
         socket.current=io('ws://localhost:8000');
         socket.current.on('getMessage',(data)=>{
             setSocketMessage(data);
+        })
+        socket.current.on('typingMessageGet',(data)=>{
+            setTypingMessage(data);
         })
     },[])
     useEffect(()=>{
@@ -52,7 +56,14 @@ export const Messenger = () => {
         })
     },[])
 
-    const inputHandle=(e)=>setNewMessage(e.target.value);
+    const inputHandle=(e)=>{
+        setNewMessage(e.target.value);
+        socket.current.emit('typingMessage',{
+            senderId:myInfo.id,
+            receiverId:currentFriend._id,
+            message:e.target.value
+        })
+    }
 
     const sendMessage=(e)=>{
         e.preventDefault();
@@ -70,6 +81,11 @@ export const Messenger = () => {
                 text:newMessage?newMessage:'❤️',
                 image:''
             }
+        })
+        socket.current.emit('typingMessage',{
+            senderId:myInfo.id,
+            receiverId:currentFriend._id,
+            message:''
         })
         dispatch(messageSend(data));
         setNewMessage('');
@@ -104,6 +120,7 @@ export const Messenger = () => {
 
     useEffect(()=>{
         dispatch(getMessage(currentFriend._id));
+        setNewMessage('');
     },[currentFriend?._id])
 
     useEffect(()=>{
@@ -153,7 +170,7 @@ export const Messenger = () => {
                 </div>
             </div>
             {
-                currentFriend?<RightSide activeUser={activeUser} imageSend={imageSend} emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+                currentFriend?<RightSide typingMessage={typingMessage} activeUser={activeUser} imageSend={imageSend} emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
             }
         </div>
     </div>

@@ -41,4 +41,14 @@ io.on('connection',(socket)=>{
             })
         }
     })
+    socket.on('typingMessage',(data)=>{
+        const user=findFriends(data.receiverId);
+        if(user!==undefined){
+            socket.to(user.socketId).emit('typingMessageGet',{
+                senderId:data.senderId,
+                receiverId:data.receiverId,
+                message:data.message
+            })
+        }
+    })
 })

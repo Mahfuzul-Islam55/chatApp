@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { MdDynamicForm } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-export const Message = ({message,currentFriend,scrollRef}) => {
+export const Message = ({message,currentFriend,scrollRef,typingMessage}) => {
     const {myInfo}=useSelector(state=>state.auth);
   return (
+      <Fragment>
       <div className='message-show'>
           {
               message && message.length>0?message.map(m=>
@@ -32,5 +33,22 @@ export const Message = ({message,currentFriend,scrollRef}) => {
               ):''
           }
         </div>
+        {
+            typingMessage && typingMessage.message && typingMessage.senderId===currentFriend._id?
+                <div className="typing-message">
+                    <div className="fd-message">
+                        <div className="image-message-time">
+                            <img src={`/image/${currentFriend.image}`}></img>
+                            <div className="message-time">
+                                <div className="fd-text">
+                                    <p className='message-text'>Typing message...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                :''
+        }
+        </Fragment>
   );
 };
