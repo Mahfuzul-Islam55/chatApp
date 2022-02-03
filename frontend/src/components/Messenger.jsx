@@ -6,6 +6,7 @@ import { RightSide } from './RightSide';
 import {useDispatch,useSelector} from 'react-redux';
 import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
 import {io} from 'socket.io-client';
+import { SOCKET_MESSAGE } from '../store/types/messengerType';
 export const Messenger = () => {
 
     const {friends,message}=useSelector(state=>state.messenger);
@@ -14,13 +15,30 @@ export const Messenger = () => {
     const [currentFriend,setCurrentFriend]=useState('');
     const [newMessage,setNewMessage]=useState('');
     const [activeUser,setActiveUser]=useState([]);
+    const [socketMessage,setSocketMessage]=useState('');
 
     const scrollRef=useRef();
     const socket=useRef();
 
     useEffect(()=>{
         socket.current=io('ws://localhost:8000');
+        socket.current.on('getMessage',(data)=>{
+            setSocketMessage(data);
+        })
     },[])
+    useEffect(()=>{
+        if(socketMessage && currentFriend){
+            if(socketMessage.senderId===currentFriend._id && socketMessage.receiverId===myInfo.id){
+                dispatch({
+                    type:SOCKET_MESSAGE,
+                    payload:{
+                        message:socketMessage
+                    }
+                })
+            }
+        }
+        setSocketMessage('');
+    },[socketMessage])
 
     useEffect(()=>{
         socket.current.emit('addUser',myInfo.id,myInfo);
@@ -43,7 +61,18 @@ export const Messenger = () => {
             receiverId:currentFriend._id,
             message:newMessage?newMessage:'❤️'
         }
+        socket.current.emit('sendMessage',{
+            senderId:myInfo.id,
+            senderName:myInfo.userName,
+            receiverId:currentFriend._id,
+            time:new Date(),
+            message:{
+                text:newMessage?newMessage:'❤️',
+                image:''
+            }
+        })
         dispatch(messageSend(data));
+        setNewMessage('');
     }
     const emojiSend=(emoji)=>setNewMessage(`${newMessage}`+emoji);
     
