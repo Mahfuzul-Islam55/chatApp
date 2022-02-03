@@ -96,7 +96,7 @@ export const Messenger = () => {
         if(e.target.files[0]!==0){
             const imageName=e.target.files[0].name;
             const newImageName=Date.now()+imageName;
-            
+
             const formData=new FormData();
 
             formData.append('senderName',myInfo.userName);
@@ -105,6 +105,16 @@ export const Messenger = () => {
             formData.append('image',e.target.files[0]);
 
             dispatch(imageMessageSend(formData));
+            socket.current.emit('sendMessage',{
+                senderId:myInfo.id,
+                senderName:myInfo.userName,
+                receiverId:currentFriend._id,
+                time:new Date(),
+                message:{
+                    text:'',
+                    image:newImageName
+                }
+            })
         }
     }
     const dispatch=useDispatch();
