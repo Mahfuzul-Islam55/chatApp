@@ -4,7 +4,7 @@ import { ActiveFriend } from './ActiveFriend';
 import { Friends } from './Friends';
 import { RightSide } from './RightSide';
 import {useDispatch,useSelector} from 'react-redux';
-import { getFriends, messageSend,getMessage } from '../store/actions/messengerAction';
+import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
 export const Messenger = () => {
 
     const {friends,message}=useSelector(state=>state.messenger);
@@ -25,10 +25,23 @@ export const Messenger = () => {
         }
         dispatch(messageSend(data));
     }
-    const emojiSend=(emoji)=>{
-        setNewMessage(`${newMessage}`+emoji);
-    }
+    const emojiSend=(emoji)=>setNewMessage(`${newMessage}`+emoji);
+    
+    const imageSend=(e)=>{
+        if(e.target.files[0]!==0){
+            const imageName=e.target.files[0].name;
+            const newImageName=Date.now()+imageName;
+            
+            const formData=new FormData();
 
+            formData.append('senderName',myInfo.userName);
+            formData.append('imageName',newImageName)
+            formData.append('receiverId',currentFriend._id);
+            formData.append('image',e.target.files[0]);
+
+            dispatch(imageMessageSend(formData));
+        }
+    }
     const dispatch=useDispatch();
 
     useEffect(()=>{
@@ -91,7 +104,7 @@ export const Messenger = () => {
                 </div>
             </div>
             {
-                currentFriend?<RightSide emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+                currentFriend?<RightSide imageSend={imageSend} emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
             }
         </div>
     </div>

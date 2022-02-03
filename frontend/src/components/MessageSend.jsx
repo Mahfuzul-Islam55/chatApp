@@ -5,7 +5,7 @@ import { BsPlusCircle } from 'react-icons/bs';
 import { MdSend } from 'react-icons/md';
 import { RiGalleryLine } from 'react-icons/ri';
 
-export const MessageSend = ({inputHandle,newMessage,sendMessage,emojiSend}) => {
+export const MessageSend = ({inputHandle,newMessage,sendMessage,emojiSend,imageSend}) => {
 
     const emojis = [
         '😀', '😃', '😄', '😁',
@@ -29,7 +29,7 @@ export const MessageSend = ({inputHandle,newMessage,sendMessage,emojiSend}) => {
               <div className="add-image">
                 Add Image
               </div>
-              <input type="file" id="pic" className="form-control" />
+              <input onChange={imageSend} type="file" id="pic" className="form-control" />
               <label htmlFor="pic"><RiGalleryLine></RiGalleryLine></label>
           </div>
           <div className="file">

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FRIENDS_GET_SUCCESS, MESSAGE_GET_SUCCESS, MESSAGE_SEND_SUCCESS } from '../types/messengerType';
+import { FRIENDS_GET_SUCCESS, IMAGE_MESSAGE_SEND, MESSAGE_GET_SUCCESS, MESSAGE_SEND_SUCCESS } from '../types/messengerType';
 export const getFriends=()=>async(dispatch)=>{
 
     try{
@@ -47,6 +47,21 @@ export const getMessage=(id)=>async(dispatch)=>{
     } catch (error) {
         console.log(error.response.data);
     }   
-    
+}
 
+export const imageMessageSend=(data)=>async(dispatch)=>{
+
+    try {
+        const response=await axios.post('/api/messenger/image-message-send',data);
+
+        dispatch({
+            type:IMAGE_MESSAGE_SEND,
+            payload:{
+                message:response.data.message
+            }
+        })
+    } catch (error) {
+        console.log(error.response.data);
+        
+    }
 }

@@ -10,7 +10,7 @@ export const Message = ({message,currentFriend,scrollRef}) => {
                   m.senderId==myInfo.id? <div ref={scrollRef} className="my-message">
                   <div className="image-message">
                       <div className="my-text">
-                          <p className="message-text">{m.message.text}</p>
+                          <p className="message-text">{m.message.text===''?<img src={`/image/${m.message.image}`}/>:m.message.text}</p>
                       </div>
                   </div>
                   <div className="time">
@@ -21,7 +21,7 @@ export const Message = ({message,currentFriend,scrollRef}) => {
                     <img src={`/image/${currentFriend.image}`}></img>
                     <div className="message-time">
                         <div className="fd-text">
-                            <p className='message-text'>{m.message.text}</p>
+                            <p className='message-text'>{m.message.text===''?<img src={`/image/${m.message.image}`}/>:m.message.text}</p>
                         </div>
                         <div className="time">
                             5December,2021
