@@ -7,6 +7,10 @@ import {useDispatch,useSelector} from 'react-redux';
 import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
 import {io} from 'socket.io-client';
 import { SOCKET_MESSAGE } from '../store/types/messengerType';
+import toast,{Toaster, toaster} from 'react-hot-toast';
+import useSound from 'use-sound';
+import notificationSound from '../audio/notification.mp3';
+import sendingSound from '../audio/sending.mp3';
 export const Messenger = () => {
 
     const {friends,message}=useSelector(state=>state.messenger);
@@ -20,6 +24,9 @@ export const Messenger = () => {
 
     const scrollRef=useRef();
     const socket=useRef();
+
+    const [notificationSPlay]=useSound(notificationSound);
+    const [sendingSPlay]=useSound(sendingSound);
 
     useEffect(()=>{
         socket.current=io('ws://localhost:8000');
@@ -45,6 +52,15 @@ export const Messenger = () => {
     },[socketMessage])
 
     useEffect(()=>{
+        if(socketMessage && currentFriend){
+            if(socketMessage.senderId!==currentFriend._id && socketMessage.receiverId===myInfo.id){
+                notificationSPlay();
+                toast.success(`${socketMessage.senderName} send a new message.`)
+            }
+        }
+    },[socketMessage])
+
+    useEffect(()=>{
         socket.current.emit('addUser',myInfo.id,myInfo);
     },[])
 
@@ -67,6 +83,7 @@ export const Messenger = () => {
 
     const sendMessage=(e)=>{
         e.preventDefault();
+        sendingSPlay();
         const data={
             senderName:myInfo.userName,
             receiverId:currentFriend._id,
@@ -90,10 +107,18 @@ export const Messenger = () => {
         dispatch(messageSend(data));
         setNewMessage('');
     }
-    const emojiSend=(emoji)=>setNewMessage(`${newMessage}`+emoji);
+    const emojiSend=(emoji)=>{
+        setNewMessage(`${newMessage}`+emoji);
+        socket.current.emit('typingMessage',{
+            senderId:myInfo.id,
+            receiverId:currentFriend._id,
+            message:emoji
+        })
+    }
     
     const imageSend=(e)=>{
         if(e.target.files[0]!==0){
+            sendingSPlay();
             const imageName=e.target.files[0].name;
             const newImageName=Date.now()+imageName;
 
@@ -139,6 +164,7 @@ export const Messenger = () => {
 
   return (
     <div className="messenger">
+        <Toaster position={'top-right'} reverseOrder={false} toastOptions={{style:{fontSize:'18px'}}}/>
         <div className="row">
             <div className="col-3">
                 <div className="left-side">
