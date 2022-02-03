@@ -5,6 +5,7 @@ import { Friends } from './Friends';
 import { RightSide } from './RightSide';
 import {useDispatch,useSelector} from 'react-redux';
 import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
+import {io} from 'socket.io-client';
 export const Messenger = () => {
 
     const {friends,message}=useSelector(state=>state.messenger);
@@ -12,7 +13,13 @@ export const Messenger = () => {
 
     const [currentFriend,setCurrentFriend]=useState('');
     const [newMessage,setNewMessage]=useState('');
+
     const scrollRef=useRef();
+    const socket=useRef();
+
+    useEffect(()=>{
+        socket.current=io('ws://localhost:8000');
+    },[])
 
     const inputHandle=(e)=>setNewMessage(e.target.value);
 
