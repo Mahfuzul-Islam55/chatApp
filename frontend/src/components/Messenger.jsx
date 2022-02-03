@@ -21,6 +21,16 @@ export const Messenger = () => {
         socket.current=io('ws://localhost:8000');
     },[])
 
+    useEffect(()=>{
+        socket.current.emit('addUser',myInfo.id,myInfo);
+    },[])
+
+    useEffect(()=>{
+        socket.current.on('getUser',(users)=>{
+            console.log(users);
+        })
+    },[])
+
     const inputHandle=(e)=>setNewMessage(e.target.value);
 
     const sendMessage=(e)=>{
