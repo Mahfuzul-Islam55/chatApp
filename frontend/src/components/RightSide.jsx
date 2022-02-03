@@ -6,7 +6,7 @@ import { FriendInfo } from './FriendInfo';
 import { Message } from './Message';
 import { MessageSend } from './MessageSend';
 
-export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,message,scrollRef,emojiSend,imageSend}) => {
+export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,message,scrollRef,emojiSend,imageSend,activeUser}) => {
   return (
       <div className="col-9">
           <div className="right-side">
@@ -18,9 +18,9 @@ export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,mess
                               <div className="image-name">
                                   <div className="image">
                                   <img src={`/image/${currentFriend.image}`}></img>
-                                  <div className="active-icon">
-
-                                  </div>
+                                  {
+                                      activeUser && activeUser.length>0 && activeUser.some(u=>u.userId===currentFriend._id)?<div className="active-icon"></div>:''
+                                  }
                                   </div>
                                   <div className="name">
                                      <h3>{currentFriend.userName}</h3>
@@ -43,7 +43,7 @@ export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,mess
                       </div>
                   </div>
                   <div className="col-4">
-                      <FriendInfo currentFriend={currentFriend}></FriendInfo>
+                      <FriendInfo currentFriend={currentFriend} activeUser={activeUser}></FriendInfo>
                   </div>
               </div>
           </div>

@@ -13,6 +13,7 @@ export const Messenger = () => {
 
     const [currentFriend,setCurrentFriend]=useState('');
     const [newMessage,setNewMessage]=useState('');
+    const [activeUser,setActiveUser]=useState([]);
 
     const scrollRef=useRef();
     const socket=useRef();
@@ -27,7 +28,9 @@ export const Messenger = () => {
 
     useEffect(()=>{
         socket.current.on('getUser',(users)=>{
+            const filterUser=users.filter(u=>u.userId!==myInfo.id);
             console.log(users);
+            setActiveUser(filterUser);
         })
     },[])
 
@@ -108,7 +111,7 @@ export const Messenger = () => {
                         </div>
                     </div>
                     <div className="active-friends">
-                        <ActiveFriend></ActiveFriend>
+                        <ActiveFriend user={activeUser} setCurrentFriend={setCurrentFriend}/>
                     </div>
                     <div className="friends">
                         {
@@ -121,7 +124,7 @@ export const Messenger = () => {
                 </div>
             </div>
             {
-                currentFriend?<RightSide imageSend={imageSend} emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+                currentFriend?<RightSide activeUser={activeUser} imageSend={imageSend} emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
             }
         </div>
     </div>
