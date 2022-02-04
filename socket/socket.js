@@ -29,16 +29,7 @@ io.on('connection',(socket)=>{
     socket.on('sendMessage',(data)=>{
         const user=findFriends(data.receiverId);
         if(user!==undefined){
-            socket.to(user.socketId).emit('getMessage',{
-                senderId:data.senderId,
-                senderName:data.senderName,
-                receiverId:data.receiverId,
-                createAt:data.time,
-                message:{
-                    text:data.message.text,
-                    image:data.message.image
-                }
-            })
+            socket.to(user.socketId).emit('getMessage',data);
         }
     })
     socket.on('typingMessage',(data)=>{

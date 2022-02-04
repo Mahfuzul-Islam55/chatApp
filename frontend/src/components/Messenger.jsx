@@ -6,14 +6,14 @@ import { RightSide } from './RightSide';
 import {useDispatch,useSelector} from 'react-redux';
 import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
 import {io} from 'socket.io-client';
-import { SOCKET_MESSAGE } from '../store/types/messengerType';
+import { MESSAGE_SEND_SUCCESS_CLEAR, SOCKET_MESSAGE } from '../store/types/messengerType';
 import toast,{Toaster, toaster} from 'react-hot-toast';
 import useSound from 'use-sound';
 import notificationSound from '../audio/notification.mp3';
 import sendingSound from '../audio/sending.mp3';
 export const Messenger = () => {
 
-    const {friends,message}=useSelector(state=>state.messenger);
+    const {friends,message,messageSendSuccess}=useSelector(state=>state.messenger);
     const {myInfo}=useSelector(state=>state.auth);
 
     const [currentFriend,setCurrentFriend]=useState('');
@@ -27,6 +27,14 @@ export const Messenger = () => {
 
     const [notificationSPlay]=useSound(notificationSound);
     const [sendingSPlay]=useSound(sendingSound);
+
+    useEffect(()=>{
+        if(messageSendSuccess){
+            socket.current.emit('sendMessage',message[message.length-1]);
+        }
+        dispatch({type:MESSAGE_SEND_SUCCESS_CLEAR});
+        
+    },[messageSendSuccess])
 
     useEffect(()=>{
         socket.current=io('ws://localhost:8000');
@@ -89,16 +97,6 @@ export const Messenger = () => {
             receiverId:currentFriend._id,
             message:newMessage?newMessage:'❤️'
         }
-        socket.current.emit('sendMessage',{
-            senderId:myInfo.id,
-            senderName:myInfo.userName,
-            receiverId:currentFriend._id,
-            time:new Date(),
-            message:{
-                text:newMessage?newMessage:'❤️',
-                image:''
-            }
-        })
         socket.current.emit('typingMessage',{
             senderId:myInfo.id,
             receiverId:currentFriend._id,
