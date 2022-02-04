@@ -150,7 +150,7 @@ export const Messenger = () => {
     },[])
 
     useEffect(()=>{
-        if(friends && friends.length>0) setCurrentFriend(friends[0]);
+        if(friends && friends.length>0) setCurrentFriend(friends[0].friendInfo);
     },[friends])
 
     useEffect(()=>{
@@ -198,7 +198,7 @@ export const Messenger = () => {
                     <div className="friends">
                         {
                             friends && friends.length>0? friends.map(fd=>
-                            <div onClick={()=>setCurrentFriend(fd)} className={currentFriend._id==fd._id?"hover-friend active":"hover-friend"}>
+                            <div onClick={()=>setCurrentFriend(fd.friendInfo)} className={currentFriend._id==fd.friendInfo._id?"hover-friend active":"hover-friend"}>
                                 <Friends friend={fd}/>
                             </div>):'no friend'
                         }

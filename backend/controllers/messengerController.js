@@ -3,13 +3,30 @@ const messageModel=require('../models/messageModel');
 const formidable=require('formidable');
 const fs=require('fs');
 
+const getLastMessage=async(myId,fdId)=>{
+    //const lstmessage=await messageModel.find().filter(m=>m.senderId===myId && m.receiverId===fdId || m.receiverId===myId && m.senderId===fdId).sort({updatedAt:-1});
+    const lstmessage=await messageModel.findOne({
+        $or:[{
+                $and:[{senderId:{$eq:myId}},{receiverId:{$eq:fdId}}],
+            },
+            {
+                $and:[{senderId:{$eq:fdId}},{receiverId:{$eq:myId}}],
+            }
+        ]
+    }).sort({updatedAt:-1});
+    return lstmessage;
+}
 module.exports.getFriends=async(req,res)=>{
     const myId=req.myId;
-    console.log(myId);
+    let friendMessage=[];
     try{
         const friendGet=await User.find({});
         const filter=friendGet.filter(d=>d.id !==myId);
-        res.status(200).json({success:true,friends:filter});
+        for(let i=0;i<filter.length;i++){
+            let lastMessage=await getLastMessage(myId,filter[i].id);
+            friendMessage=[...friendMessage,{friendInfo:filter[i],messageInfo:lastMessage}];
+        }
+        res.status(200).json({success:true,friends:friendMessage});
     }
     catch(error){
         res.status(500).json({error:{errorMessage:"Internal Server Error."}});
