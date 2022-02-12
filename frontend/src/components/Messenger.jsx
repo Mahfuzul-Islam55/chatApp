@@ -6,7 +6,7 @@ import { RightSide } from './RightSide';
 import {useDispatch,useSelector} from 'react-redux';
 import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
 import {io} from 'socket.io-client';
-import { MESSAGE_SEND_SUCCESS_CLEAR, SOCKET_MESSAGE } from '../store/types/messengerType';
+import { MESSAGE_SEND_SUCCESS_CLEAR, SOCKET_MESSAGE, UPDATE_FRIEND_MESSAGE } from '../store/types/messengerType';
 import toast,{Toaster, toaster} from 'react-hot-toast';
 import useSound from 'use-sound';
 import notificationSound from '../audio/notification.mp3';
@@ -31,9 +31,14 @@ export const Messenger = () => {
     useEffect(()=>{
         if(messageSendSuccess){
             socket.current.emit('sendMessage',message[message.length-1]);
+            dispatch({
+                type:UPDATE_FRIEND_MESSAGE,
+                payload:{
+                    messageInfo:message[message.length-1]
+                }
+            });
         }
         dispatch({type:MESSAGE_SEND_SUCCESS_CLEAR});
-        
     },[messageSendSuccess])
 
     useEffect(()=>{
@@ -55,6 +60,12 @@ export const Messenger = () => {
                     }
                 })
             }
+            dispatch({
+                type:UPDATE_FRIEND_MESSAGE,
+                payload:{
+                    messageInfo:socketMessage
+                }
+            })
         }
         setSocketMessage('');
     },[socketMessage])
