@@ -23,25 +23,30 @@ function Login({history}) {
             [e.target.name]:e.target.value
         })
     }
+
     const login=(e)=>{
         e.preventDefault(); 
         dispatch(userLogin(state));
     }
 
     useEffect(()=>{
+
         if(authenticate){
             history.push('/');
         }
+
         if(successMessage){
              alert.success(successMessage);
              dispatch({type:SUCCESS_MESSAGE_CLEAR})
         }
+
         if(error){
             error.map(err=>alert.error(err));
             dispatch({type:ERROR_CLEAR})
         }
     },[successMessage,error])
 
+    
     return (
        <div className="login">
            <div className="card">

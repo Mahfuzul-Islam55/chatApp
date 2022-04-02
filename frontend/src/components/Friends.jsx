@@ -28,7 +28,12 @@ export const Friends = ({friend}) => {
                     {
                         friend.messageInfo && myInfo.id===friend.messageInfo.senderId?
                             <div className="seen-unseen-icon">
-                                <img src={`/image/${friend.friendInfo.image}`} alt=""/>
+                                {
+                                    friend.messageInfo.status==='seen'?
+                                        <img src={`/image/${friend.friendInfo.image}`} alt=""/>:
+                                        friend.messageInfo.status==='delivered'?<div className='delivered'></div>:
+                                        <div className="unseen"></div>
+                                }
                             </div>:
                             <div className="seen-unseen-icon">
                                 <div className="seen-icon">

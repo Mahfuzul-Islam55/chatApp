@@ -42,10 +42,15 @@ export default function Register({history}) {
         }
         reader.readAsDataURL(e.target.files[0]);
     }
+
+
     const register=(e)=>{
+        
         const {userName,email,password,confirmPassword,image}=state;
         e.preventDefault();
+
         const formData=new FormData();
+
         formData.append('userName',userName);
         formData.append('email',email);
         formData.append('password',password);
@@ -53,22 +58,27 @@ export default function Register({history}) {
         formData.append('image',image);
         
         dispatch(userRegister(formData));
-       
     }
 
     useEffect(()=>{
+
         if(authenticate){
             history.push('/');
         }
+
         if(successMessage){
              alert.success(successMessage);
              dispatch({type:SUCCESS_MESSAGE_CLEAR})
         }
+
         if(error){
             error.map(err=>alert.error(err));
             dispatch({type:ERROR_CLEAR})
         }
     },[successMessage,error])
+
+
+
     return (
        <div className="register">
            <div className="card">

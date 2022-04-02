@@ -7,6 +7,7 @@ import { Message } from './Message';
 import { MessageSend } from './MessageSend';
 
 export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,message,scrollRef,emojiSend,imageSend,activeUser,typingMessage}) => {
+
   return (
       <div className="col-9">
           <div className="right-side">
@@ -19,7 +20,10 @@ export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,mess
                                   <div className="image">
                                   <img src={`/image/${currentFriend.image}`}></img>
                                   {
-                                      activeUser && activeUser.length>0 && activeUser.some(u=>u.userId===currentFriend._id)?<div className="active-icon"></div>:''
+                                      activeUser && activeUser.length>0 && activeUser.some(u=>u.userId===currentFriend._id)
+                                      ?
+                                      <div className="active-icon"></div>
+                                      :''
                                   }
                                   </div>
                                   <div className="name">
@@ -38,12 +42,26 @@ export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,mess
                                   </div>
                               </div>
                           </div>
-                          <Message typingMessage={typingMessage} scrollRef={scrollRef} currentFriend={currentFriend} message={message}></Message>
-                          <MessageSend imageSend={imageSend} emojiSend={emojiSend} inputHandle={inputHandle} newMessage={newMessage} sendMessage={sendMessage}></MessageSend>
+                          <Message 
+                                typingMessage={typingMessage} 
+                                scrollRef={scrollRef} 
+                                currentFriend={currentFriend} 
+                                message={message}>
+                          </Message>
+                           <MessageSend 
+                                imageSend={imageSend} 
+                                emojiSend={emojiSend} 
+                                inputHandle={inputHandle} 
+                                newMessage={newMessage} 
+                                sendMessage={sendMessage}>
+                            </MessageSend>
                       </div>
                   </div>
                   <div className="col-4">
-                      <FriendInfo currentFriend={currentFriend} activeUser={activeUser}></FriendInfo>
+                      <FriendInfo 
+                            currentFriend={currentFriend} 
+                            activeUser={activeUser}>
+                        </FriendInfo>
                   </div>
               </div>
           </div>

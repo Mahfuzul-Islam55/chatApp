@@ -24,9 +24,12 @@ export const Messenger = () => {
 
     const scrollRef=useRef();
     const socket=useRef();
+    const dispatch=useDispatch();
+
 
     const [notificationSPlay]=useSound(notificationSound);
     const [sendingSPlay]=useSound(sendingSound);
+
 
     useEffect(()=>{
         if(messageSendSuccess){
@@ -41,6 +44,7 @@ export const Messenger = () => {
         dispatch({type:MESSAGE_SEND_SUCCESS_CLEAR});
     },[messageSendSuccess])
 
+
     useEffect(()=>{
         socket.current=io('ws://localhost:8000');
         socket.current.on('getMessage',(data)=>{
@@ -50,6 +54,8 @@ export const Messenger = () => {
             setTypingMessage(data);
         })
     },[])
+
+
     useEffect(()=>{
         if(socketMessage && currentFriend){
             if(socketMessage.senderId===currentFriend._id && socketMessage.receiverId===myInfo.id){
@@ -70,6 +76,7 @@ export const Messenger = () => {
         setSocketMessage('');
     },[socketMessage])
 
+
     useEffect(()=>{
         if(socketMessage && currentFriend){
             if(socketMessage.senderId!==currentFriend._id && socketMessage.receiverId===myInfo.id){
@@ -79,9 +86,11 @@ export const Messenger = () => {
         }
     },[socketMessage])
 
+
     useEffect(()=>{
         socket.current.emit('addUser',myInfo.id,myInfo);
     },[])
+
 
     useEffect(()=>{
         socket.current.on('getUser',(users)=>{
@@ -91,6 +100,7 @@ export const Messenger = () => {
         })
     },[])
 
+
     const inputHandle=(e)=>{
         setNewMessage(e.target.value);
         socket.current.emit('typingMessage',{
@@ -99,6 +109,7 @@ export const Messenger = () => {
             message:e.target.value
         })
     }
+
 
     const sendMessage=(e)=>{
         e.preventDefault();
@@ -116,6 +127,7 @@ export const Messenger = () => {
         dispatch(messageSend(data));
         setNewMessage('');
     }
+
     const emojiSend=(emoji)=>{
         setNewMessage(`${newMessage}`+emoji);
         socket.current.emit('typingMessage',{
@@ -151,29 +163,37 @@ export const Messenger = () => {
             })
         }
     }
-    const dispatch=useDispatch();
+
 
     useEffect(()=>{
         if(friends && friends.length>0) setCurrentFriend(friends[0]);
         dispatch(getFriends());
     },[])
 
+
     useEffect(()=>{
         if(friends && friends.length>0) setCurrentFriend(friends[0].friendInfo);
     },[friends])
+
 
     useEffect(()=>{
         dispatch(getMessage(currentFriend._id));
         setNewMessage('');
     },[currentFriend?._id])
 
+
     useEffect(()=>{
         scrollRef.current?.scrollIntoView({behavior:'smooth'})
     },[message])
 
+
   return (
     <div className="messenger">
-        <Toaster position={'top-right'} reverseOrder={false} toastOptions={{style:{fontSize:'18px'}}}/>
+        <Toaster 
+            position={'top-right'} 
+            reverseOrder={false} 
+            toastOptions={{style:{fontSize:'18px'}}}
+        />
         <div className="row">
             <div className="col-3">
                 <div className="left-side">
@@ -202,7 +222,10 @@ export const Messenger = () => {
                         </div>
                     </div>
                     <div className="active-friends">
-                        <ActiveFriend user={activeUser} setCurrentFriend={setCurrentFriend}/>
+                        <ActiveFriend
+                             user={activeUser}
+                            setCurrentFriend={setCurrentFriend}
+                        />
                     </div>
                     <div className="friends">
                         {
@@ -215,7 +238,19 @@ export const Messenger = () => {
                 </div>
             </div>
             {
-                currentFriend?<RightSide typingMessage={typingMessage} activeUser={activeUser} imageSend={imageSend} emojiSend={emojiSend}scrollRef={scrollRef} message={message}sendMessage={sendMessage} inputHandle={inputHandle} newMessage={newMessage} currentFriend={currentFriend}/>:'Please select your friend from the friendlist'
+                currentFriend?<RightSide 
+                                    typingMessage={typingMessage} 
+                                    activeUser={activeUser} 
+                                    imageSend={imageSend} 
+                                    emojiSend={emojiSend}
+                                    scrollRef={scrollRef} 
+                                    message={message}
+                                    sendMessage={sendMessage} 
+                                    inputHandle={inputHandle} 
+                                    newMessage={newMessage} 
+                                    currentFriend={currentFriend}
+                                    />
+                                    :'Please select your friend from the friendlist'
             }
         </div>
     </div>
