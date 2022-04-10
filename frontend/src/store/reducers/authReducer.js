@@ -1,4 +1,4 @@
-import { ERROR_CLEAR, REGISTER_FAIL, REGISTER_SUCCESS, SUCCESS_MESSAGE_CLEAR, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS } from "../types/authTypes";
+import { ERROR_CLEAR, REGISTER_FAIL, REGISTER_SUCCESS, SUCCESS_MESSAGE_CLEAR, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS } from "../types/authTypes";
 import deCodeToken from 'jwt-decode';
 const authState={
     loading:true,
@@ -64,6 +64,13 @@ export const authReducer=(state=authState,action)=>{
             error:''
         }
     }
-    
+    if(type===USER_LOGOUT_SUCCESS){
+        return{
+            ...state,
+            authenticate:false,
+            myInfo:'',
+            successMessage:"Successfully Logout"
+        }
+    }
     return state;
 }

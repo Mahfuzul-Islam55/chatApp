@@ -15,6 +15,9 @@ const addUser=(userId,socketId,userInfo)=>{
 const userRemove=(socketId)=>users=users.filter(u=>u.socketId!==socketId);
 
 const findFriends=(id)=>users.find(u=>u.userId==id);
+
+const userLogout=(id)=>users=users.filter(u=>u.socketId!==id);
+
 io.on('connection',(socket)=>{
     console.log('socket is connected....');
     socket.on('addUser',(userId,userInfo)=>{
@@ -41,5 +44,9 @@ io.on('connection',(socket)=>{
                 message:data.message
             })
         }
+    })
+    socket.on('logout',userId=>{
+        userLogout(userId);
+        io.emit('getUser',users);
     })
 })

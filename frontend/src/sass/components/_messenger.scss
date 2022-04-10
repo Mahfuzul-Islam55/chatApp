@@ -47,6 +47,35 @@
                     }
                     .icons{
                         display: flex;
+                        position: relative;
+                        .theme_logout.show{
+                            transform: scale(1);
+                        }
+                        .theme_logout{
+                            width: 200px;
+                            background-color:rgb(20, 24, 59);
+                            transform: scale(0);
+                            position: absolute;
+                            transition: all .6s;
+                            top:100%;
+                            padding: 10px;
+                            color: #fff;
+                            .on,.off{
+                                label{
+                                    cursor: pointer;
+                                    color: #fff;
+                                }
+                                display: flex;
+                                justify-content: space-between;
+                                margin-top: 10px;
+                            }
+                            .logout{
+                                display: flex;
+                                align-items: center;
+                                cursor: pointer;
+                                margin-top: 10px;
+                            }
+                        }
                         .icon{
                             padding:8px;
                             background-color: #0a0a1357;

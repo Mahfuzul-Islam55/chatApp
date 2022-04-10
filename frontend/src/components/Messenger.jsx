@@ -1,5 +1,5 @@
 import React,{useEffect,useState,useRef} from 'react';
-import {BsThreeDots,FaEdit,BiSearch} from 'react-icons/all';
+import {BsThreeDots,FaEdit,BiSearch,IoLogOutOutline} from 'react-icons/all';
 import { ActiveFriend } from './ActiveFriend';
 import { Friends } from './Friends';
 import { RightSide } from './RightSide';
@@ -11,6 +11,7 @@ import toast,{Toaster, toaster} from 'react-hot-toast';
 import useSound from 'use-sound';
 import notificationSound from '../audio/notification.mp3';
 import sendingSound from '../audio/sending.mp3';
+import { userLogout } from '../store/actions/authAction';
 export const Messenger = () => {
 
     const {friends,message,messageSendSuccess}=useSelector(state=>state.messenger);
@@ -21,6 +22,7 @@ export const Messenger = () => {
     const [activeUser,setActiveUser]=useState([]);
     const [socketMessage,setSocketMessage]=useState('');
     const [typingMessage,setTypingMessage]=useState('');
+    const [hide,setHide]=useState(true);
 
     const scrollRef=useRef();
     const socket=useRef();
@@ -186,6 +188,10 @@ export const Messenger = () => {
         scrollRef.current?.scrollIntoView({behavior:'smooth'})
     },[message])
 
+    const logout=()=>{
+        dispatch(userLogout());
+        socket.current.emit('logout',myInfo.id);
+    }
 
   return (
     <div className="messenger">
@@ -207,11 +213,25 @@ export const Messenger = () => {
                             </div>
                         </div>
                         <div className="icons">
-                            <div className="icon">
+                            <div onClick={()=>setHide(!hide)} className="icon">
                                 <BsThreeDots></BsThreeDots>
                             </div>
                             <div className="icon">
                                 <FaEdit></FaEdit>
+                            </div>
+                            <div className={hide?"theme_logout":"theme_logout show"}>
+                                <h3>Dark Mode</h3>
+                                <div className="on">
+                                    <label htmlFor="dark">ON</label>
+                                    <input type="radio" name='theme' value="dark"id="dark" />
+                                </div>
+                                <div className="off">
+                                    <label htmlFor="white">OFF</label>
+                                    <input type="radio" name='theme'value="white" id="white" />
+                                </div>
+                                <div onClick={logout} className="logout">
+                                    <IoLogOutOutline/>Logout
+                                </div>
                             </div>
                         </div>
                     </div>
