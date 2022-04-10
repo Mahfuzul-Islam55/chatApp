@@ -58,7 +58,8 @@ export const RightSide = ({currentFriend,inputHandle,newMessage,sendMessage,mess
                       </div>
                   </div>
                   <div className="col-4">
-                      <FriendInfo 
+                      <FriendInfo  
+                            message={message}
                             currentFriend={currentFriend} 
                             activeUser={activeUser}>
                         </FriendInfo>

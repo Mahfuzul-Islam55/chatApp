@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsChevronDown } from 'react-icons/bs';
 
-export const FriendInfo = ({currentFriend,activeUser}) => {
+export const FriendInfo = ({currentFriend,activeUser,message}) => {
 
   return (
       <div className="friend-info">
@@ -35,19 +35,9 @@ export const FriendInfo = ({currentFriend,activeUser}) => {
           </div>
 
           <div className="gallary">
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
-              <img src="/image/23040ddd.png"></img>
+             {
+               message && message.length>0 ?message.map((m,index)=>m.message.image && <img key={index} src={`./image/${m.message.image}`} alt=""/>) :'' 
+             }
           </div>
       </div>
   );
