@@ -12,7 +12,7 @@ export const Friends = ({friend}) => {
             </div>
             <div className="friend-name-seen">
                 <div className="friend-name">
-                    <h4>{friend.friendInfo.userName}</h4>
+                    <h4 className='Fd_name'>{friend.friendInfo.userName}</h4>
                     <div className="message-time">
                         {
                           friend.messageInfo && friend.messageInfo.senderId===myInfo.id?<span>You: </span>:<span>{friend.friendInfo.userName}: </span>
