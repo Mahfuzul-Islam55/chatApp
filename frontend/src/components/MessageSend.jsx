@@ -50,7 +50,7 @@ export const MessageSend = ({inputHandle,newMessage,sendMessage,emojiSend,imageS
           </div>
             <div className="emoji-section">
                 <div className="emoji">
-                    {emojis.map(e=><span onClick={()=>emojiSend(e)}>{e}</span>)}
+                    {emojis.map((e,index)=><span key={index} onClick={()=>emojiSend(e)}>{e}</span>)}
                 </div>
             </div>
       </div>

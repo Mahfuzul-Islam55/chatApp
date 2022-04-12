@@ -7,9 +7,9 @@ export const Message = ({message,currentFriend,scrollRef,typingMessage}) => {
       <Fragment>
       <div className='message-show'>
           {
-              message && message.length>0?message.map(m=>
+              message && message.length>0?message.map((m,index)=>
                   m.senderId==myInfo.id? 
-                    <div ref={scrollRef} className="my-message">
+                    <div key={index} ref={scrollRef} className="my-message">
                         <div className="image-message">
                             <div className="my-text">
                                 <p className="message-text">{m.message.text===''?<img src={`/image/${m.message.image}`}/>:m.message.text}</p>
@@ -21,7 +21,7 @@ export const Message = ({message,currentFriend,scrollRef,typingMessage}) => {
                     </div>
                 : 
 
-                <div  ref={scrollRef} className="fd-message">
+                <div key={index} ref={scrollRef} className="fd-message">
                     <div className="image-message-time">
                         <img src={`/image/${currentFriend.image}`}></img>
                         <div className="message-time">

@@ -6,7 +6,7 @@ import { RightSide } from './RightSide';
 import {useDispatch,useSelector} from 'react-redux';
 import { getFriends, messageSend,getMessage,imageMessageSend } from '../store/actions/messengerAction';
 import {io} from 'socket.io-client';
-import { MESSAGE_SEND_SUCCESS_CLEAR, SOCKET_MESSAGE, UPDATE_FRIEND_MESSAGE } from '../store/types/messengerType';
+import { LOGOUT_SUCCESS, MESSAGE_SEND_SUCCESS_CLEAR, NEW_USER_ADD, NEW_USER_ADD_CLEAR, SOCKET_MESSAGE, UPDATE_FRIEND_MESSAGE } from '../store/types/messengerType';
 import toast,{Toaster, toaster} from 'react-hot-toast';
 import useSound from 'use-sound';
 import notificationSound from '../audio/notification.mp3';
@@ -14,7 +14,7 @@ import sendingSound from '../audio/sending.mp3';
 import { userLogout } from '../store/actions/authAction';
 export const Messenger = () => {
 
-    const {friends,message,messageSendSuccess}=useSelector(state=>state.messenger);
+    const {friends,message,messageSendSuccess,new_user_add}=useSelector(state=>state.messenger);
     const {myInfo}=useSelector(state=>state.auth);
 
     const [currentFriend,setCurrentFriend]=useState('');
@@ -100,6 +100,14 @@ export const Messenger = () => {
             console.log(users);
             setActiveUser(filterUser);
         })
+        socket.current.on('new_user_add',data=>{
+            dispatch({
+                type:NEW_USER_ADD,
+                payload:{
+                    new_user_add:data
+                }
+            })
+        })
     },[])
 
 
@@ -170,7 +178,8 @@ export const Messenger = () => {
     useEffect(()=>{
         if(friends && friends.length>0) setCurrentFriend(friends[0]);
         dispatch(getFriends());
-    },[])
+        dispatch({type:NEW_USER_ADD_CLEAR});
+    },[new_user_add])
 
 
     useEffect(()=>{
@@ -191,6 +200,8 @@ export const Messenger = () => {
     const logout=()=>{
         dispatch(userLogout());
         socket.current.emit('logout',myInfo.id);
+        dispatch({type:LOGOUT_SUCCESS});
+
     }
 
     const search=(e)=>{
@@ -226,10 +237,10 @@ export const Messenger = () => {
                         </div>
                         <div className="icons">
                             <div onClick={()=>setHide(!hide)} className="icon">
-                                <BsThreeDots></BsThreeDots>
+                                <BsThreeDots size={20}></BsThreeDots>
                             </div>
                             <div className="icon">
-                                <FaEdit></FaEdit>
+                                <FaEdit size={20}></FaEdit>
                             </div>
                             <div className={hide?"theme_logout":"theme_logout show"}>
                                 <h3>Dark Mode</h3>
@@ -261,8 +272,8 @@ export const Messenger = () => {
                     </div>
                     <div className="friends">
                         {
-                            friends && friends.length>0? friends.map(fd=>
-                            <div onClick={()=>setCurrentFriend(fd.friendInfo)} className={currentFriend._id==fd.friendInfo._id?"hover-friend active":"hover-friend"}>
+                            friends && friends.length>0? friends.map((fd,index)=>
+                            <div key={index} onClick={()=>setCurrentFriend(fd.friendInfo)} className={currentFriend._id==fd.friendInfo._id?"hover-friend active":"hover-friend"}>
                                 <Friends friend={fd}/>
                             </div>):'no friend'
                         }
